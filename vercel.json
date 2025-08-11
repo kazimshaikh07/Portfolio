@@ -10,11 +10,7 @@
       }
     },
     {
-      "src": "portfolio/static/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "build_vercel.sh",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "portfolio/staticfiles"
@@ -44,5 +40,7 @@
     "VERCEL": "1",
     "PYTHONPATH": ".:./portfolio",
     "DEBUG": "False"
-  }
+  },
+  "buildCommand": "python -m pip install -r requirements-vercel.txt && cd portfolio && python manage.py collectstatic --noinput",
+  "outputDirectory": "portfolio/staticfiles"
 }

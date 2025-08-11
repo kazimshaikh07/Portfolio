@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import os
-import dj_database_url
+import dj_database_url # type: ignore
 
 
 

@@ -2,15 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/simple.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.11"
-      }
-    },
-    {
-      "src": "api/test_endpoint.py",
+      "src": "api/index.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -20,25 +12,37 @@
     {
       "src": "portfolio/static/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "build_vercel.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "portfolio/staticfiles"
+      }
     }
   ],
   "routes": [
-    {
-      "src": "/api/test",
-      "dest": "/api/test_endpoint.py"
-    },
     {
       "src": "/static/(.*)",
       "dest": "/portfolio/static/$1"
     },
     {
+      "src": "/media/(.*)",
+      "dest": "/portfolio/media/$1"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/api/simple.py"
+      "dest": "/api/index.py"
     }
   ],
   "env": {
     "DJANGO_SETTINGS_MODULE": "portfolio.settings",
     "VERCEL": "1",
-    "PYTHONPATH": ".:./portfolio"
+    "PYTHONPATH": ".:./portfolio",
+    "DEBUG": "False"
   }
 }

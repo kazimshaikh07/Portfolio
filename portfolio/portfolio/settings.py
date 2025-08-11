@@ -182,6 +182,9 @@ if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
     WHITENOISE_USE_FINDERS = True
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Ensure WhiteNoise middleware is active early
+    if 'whitenoise.middleware.WhiteNoiseMiddleware' not in MIDDLEWARE:
+        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Honor proxy SSL header (Render)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

@@ -33,13 +33,17 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-# Hosts and CSRF for PythonAnywhere / Render
+# Hosts and CSRF for Vercel / Render / PythonAnywhere
 PA_DOMAIN = os.environ.get('PA_DOMAIN')
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+VERCEL_URL = os.environ.get('VERCEL_URL')  # e.g., myapp.vercel.app
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
     CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
+elif VERCEL_URL:
+    ALLOWED_HOSTS = [VERCEL_URL]
+    CSRF_TRUSTED_ORIGINS = [f"https://{VERCEL_URL}"]
 elif PA_DOMAIN:
     ALLOWED_HOSTS = [PA_DOMAIN]
     CSRF_TRUSTED_ORIGINS = [f"https://{PA_DOMAIN}"]

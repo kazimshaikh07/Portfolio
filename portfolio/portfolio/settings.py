@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import os
-import dj_database_url # type: ignore
+import dj_database_url  # type: ignore
 
 
 
@@ -25,14 +25,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4sju@06p7!r)bu8cr3^3jez@c!&w$-u53pp49mm6aw9a^3+ra!'
+# Read from env on Render. Falls back to the existing key for local/dev.
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-4sju@06p7!r)bu8cr3^3jez@c!&w$-u53pp49mm6aw9a^3+ra!'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
-ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com']
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = ["*"]
+# Hosts and CSRF for Render
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
+    CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
+else:
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -137,8 +145,9 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Allowed hosts
-ALLOWED_HOSTS = ['*']  # You can replace '*' with your Render domain later
+# Honor X-Forwarded-Proto from Render's proxy
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 
 # Default primary key field type

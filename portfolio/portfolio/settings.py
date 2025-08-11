@@ -173,7 +173,6 @@ if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-WHITENOISE_USE_FINDERS = True
 
 # On Vercel, avoid DB-backed sessions/messages to prevent writes
 if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):

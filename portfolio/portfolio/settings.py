@@ -33,9 +33,14 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-# Hosts and CSRF for PythonAnywhere
+# Hosts and CSRF for PythonAnywhere / Render
 PA_DOMAIN = os.environ.get('PA_DOMAIN')
-if PA_DOMAIN:
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
+    CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
+elif PA_DOMAIN:
     ALLOWED_HOSTS = [PA_DOMAIN]
     CSRF_TRUSTED_ORIGINS = [f"https://{PA_DOMAIN}"]
 else:
@@ -143,6 +148,9 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Honor proxy SSL header (Render)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 

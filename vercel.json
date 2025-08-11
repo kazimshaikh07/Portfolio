@@ -2,18 +2,43 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "api/simple.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
         "runtime": "python3.11"
       }
+    },
+    {
+      "src": "api/test_endpoint.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "portfolio/static/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/api/test",
+      "dest": "/api/test_endpoint.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/portfolio/static/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "dest": "/api/simple.py"
     }
-  ]
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "portfolio.settings",
+    "VERCEL": "1",
+    "PYTHONPATH": ".:./portfolio"
+  }
 }

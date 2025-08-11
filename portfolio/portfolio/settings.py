@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import os
-import dj_database_url # type: ignore
+import dj_database_url  # type: ignore
 
 
 
@@ -25,14 +25,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4sju@06p7!r)bu8cr3^3jez@c!&w$-u53pp49mm6aw9a^3+ra!'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-4sju@06p7!r)bu8cr3^3jez@c!&w$-u53pp49mm6aw9a^3+ra!'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
-ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com']
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = ["*"]
+# Hosts and CSRF for PythonAnywhere
+PA_DOMAIN = os.environ.get('PA_DOMAIN')
+if PA_DOMAIN:
+    ALLOWED_HOSTS = [PA_DOMAIN]
+    CSRF_TRUSTED_ORIGINS = [f"https://{PA_DOMAIN}"]
+else:
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -137,8 +144,6 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Allowed hosts
-ALLOWED_HOSTS = ['*']  # You can replace '*' with your Render domain later
 
 
 # Default primary key field type

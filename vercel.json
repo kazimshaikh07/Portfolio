@@ -10,6 +10,62 @@
       }
     },
     {
+      "src": "api/test.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/simple_wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/django_handler.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/direct_django.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/minimal_django.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/simple_app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
+      "src": "api/vercel_app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    },
+    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
@@ -25,6 +81,34 @@
     {
       "src": "/media/(.*)",
       "dest": "/portfolio/media/$1"
+    },
+    {
+      "src": "/test",
+      "dest": "/api/test.py"
+    },
+    {
+      "src": "/simple",
+      "dest": "/api/simple_wsgi.py"
+    },
+    {
+      "src": "/django",
+      "dest": "/api/django_handler.py"
+    },
+    {
+      "src": "/direct",
+      "dest": "/api/direct_django.py"
+    },
+    {
+      "src": "/minimal",
+      "dest": "/api/minimal_django.py"
+    },
+    {
+      "src": "/app",
+      "dest": "/api/simple_app.py"
+    },
+    {
+      "src": "/portfolio",
+      "dest": "/api/vercel_app.py"
     },
     {
       "src": "/admin/(.*)",

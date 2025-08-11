@@ -1,7 +1,8 @@
-# Simple handler for Vercel serverless functions
-import json
+# Simple Django app for Vercel
+from django.http import JsonResponse
 import os
 import sys
+import json
 import traceback
 
 # Print debug information
@@ -10,18 +11,18 @@ print(f"Current directory: {os.getcwd()}")
 print(f"Directory contents: {os.listdir()}")
 print(f"Environment variables: {list(os.environ.keys())}")
 
+# Simple view function
 def handler(request, **kwargs):
-    """A simple handler for Vercel serverless functions."""
+    """A simple Django view function for Vercel."""
     try:
         # Print request information
         print(f"Request path: {request.path}")
         print(f"Request method: {request.method}")
-        print(f"Request headers: {dict(request.headers)}")
         
         # Collect environment information
         info = {
             'status': 'ok',
-            'message': 'Simple handler is working',
+            'message': 'Simple Django app is working',
             'python_version': sys.version,
             'current_directory': os.getcwd(),
             'directory_contents': os.listdir(),
@@ -31,13 +32,7 @@ def handler(request, **kwargs):
         }
         
         # Return a JSON response
-        return {
-            'statusCode': 200,
-            'body': json.dumps(info),
-            'headers': {
-                'Content-Type': 'application/json'
-            }
-        }
+        return JsonResponse(info)
     except Exception as e:
         error_message = f"Error in handler: {str(e)}"
         error_traceback = traceback.format_exc()
@@ -45,19 +40,12 @@ def handler(request, **kwargs):
         print(error_traceback)
         
         # Return a JSON error response
-        return {
-            'statusCode': 500,
-            'body': json.dumps({
-                'status': 'error',
-                'message': error_message,
-                'traceback': error_traceback,
-                'python_version': sys.version,
-                'current_directory': os.getcwd(),
-                'directory_contents': os.listdir(),
-                'environment_variables': list(os.environ.keys())
-            }),
-            'headers': {
-                'Content-Type': 'application/json'
-            }
-        }
-
+        return JsonResponse({
+            'status': 'error',
+            'message': error_message,
+            'traceback': error_traceback,
+            'python_version': sys.version,
+            'current_directory': os.getcwd(),
+            'directory_contents': os.listdir(),
+            'environment_variables': list(os.environ.keys())
+        }, status=500)

@@ -1,0 +1,44 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# Local development settings
+.env.local
+.env.development.local
+
+# Database files
+*.sqlite3
+
+# Media files (should be served from a CDN in production)
+media/
+
+# Static files (collected during build)
+static/
+
+# Log files
+*.log
+
+# Git and version control
+.git/
+.gitignore
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+tests/
+test_*.py
+
+# Documentation
+docs/
+*.md
+!README.md

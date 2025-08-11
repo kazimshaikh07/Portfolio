@@ -157,6 +157,11 @@ if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# On Vercel, avoid DB-backed sessions/messages to prevent writes
+if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
+    SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+    MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 # Honor proxy SSL header (Render)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

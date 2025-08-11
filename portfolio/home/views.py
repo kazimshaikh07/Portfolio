@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
 from home.models import Contact
+import os
 from django.contrib import messages
 
 # Create your views here.
@@ -13,6 +14,10 @@ def home(request):
         message_text = request.POST.get('message', '').strip()
 
         if name and email and message_text:
+            # Skip DB write on Vercel if no DATABASE_URL set
+            if (os.environ.get('VERCEL') or os.environ.get('VERCEL_URL')) and not os.environ.get('DATABASE_URL'):
+                messages.success(request, "Thank you! Message received (demo mode).")
+                return redirect('home')
             contact = Contact(
                 name=name,
                 email=email,

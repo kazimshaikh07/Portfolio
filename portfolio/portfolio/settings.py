@@ -104,12 +104,19 @@ DATABASES = {
     }
 }
 
-# Use DATABASE_URL from Render
+# Use DATABASE_URL (Render/Vercel) if provided; otherwise on Vercel use in-memory SQLite
 DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL:
     DATABASES["default"] = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=600, ssl_require=True
     )
+elif os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
 
 
 # Password validation

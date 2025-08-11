@@ -37,18 +37,27 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 PA_DOMAIN = os.environ.get('PA_DOMAIN')
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 VERCEL_URL = os.environ.get('VERCEL_URL')  # e.g., myapp.vercel.app
+CUSTOM_DOMAIN = os.environ.get('CUSTOM_DOMAIN')  # optional custom domain
+
+allowed = {"localhost", "127.0.0.1", ".vercel.app"}
+csrf = set()
 
 if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
-    CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
-elif VERCEL_URL:
-    ALLOWED_HOSTS = [VERCEL_URL]
-    CSRF_TRUSTED_ORIGINS = [f"https://{VERCEL_URL}"]
-elif PA_DOMAIN:
-    ALLOWED_HOSTS = [PA_DOMAIN]
-    CSRF_TRUSTED_ORIGINS = [f"https://{PA_DOMAIN}"]
-else:
-    ALLOWED_HOSTS = ["*"]
+    allowed.add(RENDER_EXTERNAL_HOSTNAME)
+    csrf.add(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+if VERCEL_URL:
+    allowed.add(VERCEL_URL)
+    csrf.add(f"https://{VERCEL_URL}")
+if PA_DOMAIN:
+    allowed.add(PA_DOMAIN)
+    csrf.add(f"https://{PA_DOMAIN}")
+if CUSTOM_DOMAIN:
+    allowed.add(CUSTOM_DOMAIN)
+    csrf.add(f"https://{CUSTOM_DOMAIN}")
+
+ALLOWED_HOSTS = list(allowed)
+if csrf:
+    CSRF_TRUSTED_ORIGINS = list(csrf)
 
 
 # Application definition
@@ -153,7 +162,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]

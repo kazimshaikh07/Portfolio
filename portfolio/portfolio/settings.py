@@ -177,6 +177,8 @@ else:
 if os.environ.get('VERCEL') or os.environ.get('VERCEL_URL'):
     SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
     MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+    # Let WhiteNoise use staticfiles finders so we don't need collectstatic
+    WHITENOISE_USE_FINDERS = True
 
 # Honor proxy SSL header (Render)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

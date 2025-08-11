@@ -1,1 +1,1 @@
-web: cd portfolio && python manage.py migrate --noinput && gunicorn portfolio.wsgi
+web: python manage.py migrate --noinput && gunicorn portfolio.wsgi

@@ -3,8 +3,8 @@ services:
     name: portfolio
     env: python
     plan: free
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && cd portfolio && python manage.py collectstatic --noinput
-    startCommand: cd portfolio && python manage.py migrate --noinput && gunicorn portfolio.wsgi
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate --noinput && gunicorn portfolio.wsgi
     autoDeploy: true
     envVars:
       - key: SECRET_KEY

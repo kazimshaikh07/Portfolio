@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "portfolio/api/index.py",
       "use": "@vercel/python"
     },
     {
@@ -16,12 +16,8 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "api/index.py"
-    },
-    {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "dest": "portfolio/api/index.py"
     }
   ]
 }

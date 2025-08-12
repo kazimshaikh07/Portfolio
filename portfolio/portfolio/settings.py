@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
 # Hosts and CSRF for Vercel / Render / PythonAnywhere
 PA_DOMAIN = os.environ.get('PA_DOMAIN')

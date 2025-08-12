@@ -4,6 +4,7 @@ from datetime import datetime
 from home.models import Contact
 import os
 from django.contrib import messages
+from django.conf import settings
 
 # Create your views here.
 def home(request):

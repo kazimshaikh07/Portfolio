@@ -4,8 +4,8 @@ from pathlib import Path
 
 # Add the Django project to the Python path
 current_dir = Path(__file__).resolve().parent
-project_dir = current_dir.parent / 'portfolio'
-sys.path.insert(0, str(project_dir))
+project_root = current_dir.parent
+sys.path.insert(0, str(project_root))
 
 # Set Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')

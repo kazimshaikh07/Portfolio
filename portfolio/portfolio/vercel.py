@@ -11,7 +11,9 @@ DJANGO_PROJECT_ROOT = PROJECT_DIR.parent  # .../portfolio
 if str(DJANGO_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(DJANGO_PROJECT_ROOT))
 
+# Set environment variables for Vercel
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
+os.environ.setdefault('VERCEL', '1')
 
 from django.core.wsgi import get_wsgi_application
 

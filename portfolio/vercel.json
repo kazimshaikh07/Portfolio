@@ -3,11 +3,7 @@
   "builds": [
     {
       "src": "portfolio/vercel.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
@@ -19,8 +15,5 @@
       "src": "/(.*)",
       "dest": "portfolio/vercel.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "portfolio.settings"
-  }
+  ]
 }

@@ -5,12 +5,11 @@ from pathlib import Path
 # Ensure project package is importable
 CURRENT_FILE = Path(__file__).resolve()
 PROJECT_DIR = CURRENT_FILE.parent  # .../portfolio/portfolio
-REPO_ROOT = PROJECT_DIR.parent.parent  # repo root
 DJANGO_PROJECT_ROOT = PROJECT_DIR.parent  # .../portfolio
 
-for p in (str(DJANGO_PROJECT_ROOT), str(REPO_ROOT)):
-    if p not in sys.path:
-        sys.path.insert(0, p)
+# Add the Django project root to Python path
+if str(DJANGO_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(DJANGO_PROJECT_ROOT))
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
 
